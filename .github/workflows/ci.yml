@@ -33,3 +33,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tasks-laravel:latest
+ 
