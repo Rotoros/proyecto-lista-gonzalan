@@ -1,0 +1,9 @@
+No té sentit que es puguin veure les categories inicialment 
+(les llistes, sí). Heu posat també categories a les llistes (per què?). 
+No és visual, ja que poseu massa informació quan mostreu els productes, 
+això fa que sigui poc pràctica i que hagueu d'anar desplaçant-vos per 
+la pàgina per poder anar mirant). Les llistes surten una darrere de l'altra, 
+i això ja sí que complica extremadament l'experiència d'usuari. Haurien de 
+sortir el llistat de llistes sense els productes, i veure els productes 
+d'una llista en concret quan s'entra. Podrieu haver posat una quantitat
+ per defecte d'1 si no es posa res.
