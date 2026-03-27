@@ -45,6 +45,23 @@ class CompartirLlistaController extends Controller
             ->whereIn('id', $llistaIds)
             ->get();
 
-        return view('llistas.compartidas', compact('llistas'));
+        return view('llistas.compartides.index', compact('llistas'));
+    }
+    public function show($id)
+    {
+        // Verificar que esta lista está compartida con el usuario
+        $existe = LlistaCompartida::where('receptor_id', auth()->id())
+            ->where('llista_original_id', $id)
+            ->exists();
+
+        if (!$existe) {
+            abort(403);
+        }
+
+        // Cargar la lista con relaciones
+        $llista = Llista::with(['productes', 'categoria'])
+            ->findOrFail($id);
+
+        return view('llistas.compartides.show', compact('llista'));
     }
 }

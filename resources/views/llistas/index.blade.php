@@ -109,22 +109,62 @@
 
             {{-- MODAL SHARE --}}
             <div class="modal fade" id="share{{ $llista->id }}">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header bg-info text-white">
-                            <h5>Compartir</h5>
-                            <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('llistas.compartir', $llista->id) }}" method="POST">
-                                @csrf
-                                <input type="email" name="email" class="form-control mb-3" placeholder="email" required>
-                                <button class="btn btn-info text-white w-100">Enviar</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+            {{-- HEADER --}}
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-share me-2"></i>
+                    Compartir llista
+                </h5>
+                <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
+
+            {{-- BODY --}}
+            <div class="modal-body p-4">
+
+                <p class="text-muted small mb-3">
+                    Escriu el correu de la persona amb qui vols compartir la llista:
+                </p>
+
+                <form action="{{ route('llistas.compartir', $llista->id) }}" method="POST">
+                    @csrf
+
+                    {{-- INPUT --}}
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-light">
+                            <i class="bi bi-envelope"></i>
+                        </span>
+
+                        <input 
+                            type="email" 
+                            name="email" 
+                            class="form-control" 
+                            placeholder="email@exemple.com" 
+                            required
+                        >
+                    </div>
+
+                    {{-- BOTÓN --}}
+                    <button class="btn btn-info w-100 text-white fw-bold py-2">
+                        <i class="bi bi-send me-1"></i>
+                        Enviar invitació
+                    </button>
+                </form>
+
+                {{-- INFO EXTRA --}}
+                <div class="mt-3 text-center">
+                    <small class="text-muted">
+                        La persona podrà veure i editar la llista
+                    </small>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
         @empty
             <div class="text-center">

@@ -68,8 +68,17 @@ Route::middleware('auth')->group(function () {
 
 
     //Comprtir
-    Route::post('/llistas/{id}/compartir', [CompartirLlistaController::class, 'compartir'])->name('llistas.compartir');
-    Route::get('/compartido-conmigo', [CompartirLlistaController::class, 'recibidas'])->name('llistas.compartidas');
+    // Compartir
+Route::post('/llistas/{id}/compartir', [CompartirLlistaController::class, 'compartir'])
+    ->name('llistas.compartir');
+
+// Index compartidas
+Route::get('/compartido-conmigo', [CompartirLlistaController::class, 'recibidas'])
+    ->name('llistas.compartidas');
+
+// Show compartidas (NUEVO)
+Route::get('/compartido-conmigo/{id}', [CompartirLlistaController::class, 'show'])
+    ->name('llistas.compartidas.show');
 
     //Show
     Route::resource('llistas', LlistaController::class);
