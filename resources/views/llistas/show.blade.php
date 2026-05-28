@@ -30,9 +30,15 @@
         </div>
     @endif
 
-    {{-- PRODUCTOS --}}
+    @php
+        $pendents = $llista->productes->where('comprat', false);
+        $comprats = $llista->productes->where('comprat', true);
+    @endphp
+
+    {{-- PRODUCTOS PENDIENTES --}}
     <ul class="list-group mb-4">
-        @forelse($llista->productes as $producte)
+
+        @forelse($pendents as $producte)
         <li class="list-group-item">
             <div class="row align-items-center g-2">
 
@@ -66,15 +72,13 @@
                     </select>
                 </form>
 
-                {{-- BOTONES IGUALES (verde + rojo) --}}
+                {{-- BOTONES --}}
                 <div class="col-auto d-flex gap-1">
 
-                    {{-- VERDE --}}
                     <button form="form-update-{{ $producte->id }}" class="btn btn-success btn-sm">
                         <i class="bi bi-check2"></i>
                     </button>
 
-                    {{-- ROJO --}}
                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteProduct{{ $producte->id }}">
                         <i class="bi bi-trash3"></i>
                     </button>
@@ -95,7 +99,11 @@
                     <div class="modal-body text-center">
                         Segur que vols eliminar <strong>{{ $producte->nom }}</strong>?
                     </div>
-                    <div class="modal-footer">
+                   <div class="modal-footer d-flex justify-content-between">
+    
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Cancel·lar
+                        </button>
                         <form action="{{ route('productes.destroy', $producte->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -112,8 +120,7 @@
             </li>
         @endforelse
     </ul>
-
-    {{-- AÑADIR PRODUCTO --}}
+     {{-- PRODUCTOS AÑADIDOS --}}
     <form action="{{ route('productes.store') }}" method="POST" class="d-flex gap-2">
         @csrf
         <input type="hidden" name="llista_id" value="{{ $llista->id }}">
@@ -126,6 +133,54 @@
             <i class="bi bi-plus-circle"></i> Afegir
         </button>
     </form>
+
+    {{-- PRODUCTOS COMPRADOS --}}
+    @if($comprats->count())
+
+        <h4 class="fw-bold mt-5 mb-3 text-success">
+            <i class="bi bi-basket2-fill"></i>
+            Productes afegits a la cistella
+        </h4>
+
+        <ul class="list-group mb-4">
+
+            @foreach($comprats as $producte)
+
+                <li class="list-group-item bg-light">
+                    <div class="row align-items-center g-2">
+
+                        {{-- CHECK --}}
+                        <div class="col-auto">
+                            <form action="{{ route('productes.toggleComprat', $producte->id) }}" method="POST">
+                                @csrf
+                                <input type="checkbox" onchange="this.form.submit()" checked>
+                            </form>
+                        </div>
+
+                        {{-- NOMBRE --}}
+                        <div class="col">
+                            <span class="text-decoration-line-through text-muted">
+                                {{ $producte->nom }}
+                            </span>
+                        </div>
+
+                        {{-- CANTIDAD --}}
+                        <div class="col-auto">
+                            <span class="badge bg-success">
+                                x{{ $producte->quantitat }}
+                            </span>
+                        </div>
+
+                    </div>
+                </li>
+
+            @endforeach
+
+        </ul>
+
+    @endif
+
+    
 
 </div>
 @endsection

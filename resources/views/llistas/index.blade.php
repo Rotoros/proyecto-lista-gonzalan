@@ -173,6 +173,24 @@
         @endforelse
     </div>
 
+   @if ($llistas->lastPage() > 1)
+    <div class="d-flex justify-content-center mt-4">
+        <nav>
+            <ul class="pagination">
+
+                @for ($i = 1; $i <= $llistas->lastPage(); $i++)
+                    <li class="page-item {{ $llistas->currentPage() == $i ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $llistas->url($i) }}">
+                            {{ $i }}
+                        </a>
+                    </li>
+                @endfor
+
+            </ul>
+        </nav>
+    </div>
+   @endif
+
     <div class="text-center mt-5">
         <a href="{{ route('llistas.create') }}" class="btn btn-success">
             Nova llista

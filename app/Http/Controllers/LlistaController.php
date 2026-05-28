@@ -30,6 +30,7 @@ class LlistaController extends Controller
     public function index(Request $request)
     {
         $usuari = Auth::user();
+
         if (!$usuari) {
             return redirect()->route('login')->with('error', 'Has d’iniciar sessió.');
         }
@@ -41,7 +42,8 @@ class LlistaController extends Controller
             ->when($request->search, function ($query) use ($request) {
                 $query->where('titol', 'like', '%' . $request->search . '%');
             })
-            ->get();
+
+            ->paginate(5); // ← AQUÍ
 
         return view('llistas.index', compact('llistas'));
     }

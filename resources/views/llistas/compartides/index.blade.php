@@ -23,6 +23,18 @@
                                 </span>
                             @endif
                         </div>
+                        <div class="text-muted small">
+                            @php
+                                $compartida = \App\Models\LlistaCompartida::with('remitente')
+                                    ->where('llista_original_id', $llista->id)
+                                    ->where('receptor_id', auth()->id())
+                                    ->first();
+                            @endphp
+
+                            @if($compartida)
+                                Compartida per: {{ $compartida->remitente->name }}
+                            @endif
+                        </div>
 
                         {{-- BOTÓN VER --}}
                         <div>
