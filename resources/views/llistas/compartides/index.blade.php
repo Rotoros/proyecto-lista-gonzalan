@@ -35,8 +35,6 @@
                                 Compartida per: {{ $compartida->remitente->name }}
                             @endif
                         </div>
-
-                        {{-- BOTÓN VER --}}
                         <div>
                             <a href="{{ route('llistas.compartidas.show', $llista->id) }}" class="btn btn-primary btn-sm">
                                 <i class="bi bi-eye"></i>
